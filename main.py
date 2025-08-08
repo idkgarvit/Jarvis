@@ -20,7 +20,7 @@ import re
 engine = pyttsx3.init()
 
 # Use your News API key here
-newsApi = "NEW_API_KEYS" # Your News API keys 
+newsApi = "NEWS_API_KEYS" # Your News API keys 
 
 #OpenAi Api keys
 client = OpenAI(
@@ -327,4 +327,5 @@ if __name__ == "__main__":
 
             if any(word in text.lower() for word in wake_words):
                 print("Wake word detected!")
+
                 start_jarvis()
