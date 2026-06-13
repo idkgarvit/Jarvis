@@ -1,0 +1,159 @@
+# Jarvis Configuration
+# =====================
+# This file controls all aspects of Jarvis behavior.
+# Copy to ~/.config/jarvis/config.yaml for user-specific settings.
+
+# General Settings
+general:
+  name: "Jarvis"
+  version: "2.0.0"
+  language: "en"
+  log_level: "INFO"
+  data_dir: "~/.local/share/jarvis"
+  config_dir: "~/.config/jarvis"
+  cache_dir: "~/.cache/jarvis"
+
+# Persona / Personality
+persona:
+  name: "Jarvis"
+  tone: "calm, dry-witted, formal-but-warm"
+
+# Wake Word Detection
+wake_word:
+  enabled: true
+  engine: "porcupine"
+  keywords: ["jarvis", "hey jarvis"]
+  sensitivity: 0.7
+
+# Speech-to-Text (STT)
+stt:
+  engine: "vosk"
+  model: "base.en"
+  device: "auto"
+  compute_type: "int8"
+  language: "en"
+  beam_size: 5
+  vad_filter: true
+  vosk_model_path: "~/.cache/jarvis/vosk-model"
+  whisper_cpp_path: "~/.cache/jarvis/whisper.cpp"
+
+# Text-to-Speech (TTS)
+tts:
+  engine: "edge-tts"
+  voice: "en-US-GuyNeural"
+  speed: 1.0
+  piper_model_dir: "~/.cache/jarvis/piper"
+  kokoro_model: "kokoro-v1.0.onnx"
+  kokoro_voice: "af_heart"
+  fallback_engine: "pyttsx3"
+
+# Local LLM
+llm:
+  engine: "openai"
+  model: "meta/llama-3.1-8b-instruct"
+  base_url: "https://integrate.api.nvidia.com/v1"
+  api_key: ""
+  fallback_models:
+    - "deepseek-ai/deepseek-v4-flash"
+    - "minimaxai/minimax-m3"
+    - "nvidia/nemotron-3-ultra-550b-a55b"
+  temperature: 0.7
+  top_p: 0.9
+  max_tokens: 4096
+  system_prompt: "You are JARVIS, a highly capable AI assistant. Be concise, helpful, and proactive. You have access to system control, file management, web search, and productivity tools. Use them to complete tasks efficiently."
+
+# Browser Automation
+browser:
+  engine: "playwright"  # playwright, selenium
+  headless: false
+  persistent_context: true
+  user_data_dir: "~/.config/jarvis/browser"
+  timeout: 30000
+  # Stealth settings
+  stealth: true
+  block_resources: ["image", "font", "media"]  # Block for speed
+
+# Integrations
+integrations:
+  gmail:
+    enabled: false
+    credentials_path: "~/.config/jarvis/gmail_credentials.json"
+    token_path: "~/.config/jarvis/gmail_token.json"
+    scopes:
+      - "https://www.googleapis.com/auth/gmail.readonly"
+      - "https://www.googleapis.com/auth/gmail.send"
+      - "https://www.googleapis.com/auth/gmail.modify"
+
+  whatsapp:
+    enabled: false
+    engine: "whatsapp-web.js"  # whatsapp-web.js, baileys
+    session_path: "~/.config/jarvis/whatsapp_session"
+    headless: true
+
+  calendar:
+    enabled: false
+    provider: "google"  # google, caldav
+    credentials_path: "~/.config/jarvis/calendar_credentials.json"
+
+# Plugin System
+plugins:
+  enabled: true
+  auto_load: true
+  plugin_dirs:
+    - "~/.config/jarvis/plugins"
+    - "./plugins"
+  builtin_plugins:
+    - "system_control"
+    - "file_operations"
+    - "web_search"
+    - "code_execution"
+    - "weather"
+    - "calculator"
+    - "timer_alarm"
+
+# Background Daemon
+daemon:
+  enabled: true
+  pid_file: "~/.local/share/jarvis/jarvis.pid"
+  log_file: "~/.local/share/jarvis/jarvis.log"
+  restart_on_failure: true
+  max_restarts: 3
+  health_check_interval: 30
+
+# Performance & Caching
+performance:
+  # Vector database for fast retrieval
+  vector_db:
+    enabled: true
+    type: "chromadb"  # chromadb, faiss, qdrant
+    path: "~/.local/share/jarvis/vector_db"
+    collection: "jarvis_memory"
+    embedding_model: "all-MiniLM-L6-v2"
+
+  # Response caching
+  cache:
+    enabled: true
+    ttl: 3600  # seconds
+    max_size: 1000
+
+  # Parallel processing
+  workers: 4
+  async_io: true
+
+# Security
+security:
+  require_confirmation: true
+  dangerous_commands_need_approval: true
+  allowed_domains: []  # Empty = all allowed
+  blocked_domains: []
+  api_key_rotation_days: 90
+
+# Installation / Setup
+installation:
+  auto_install_local_ai: true
+  preferred_llm_backend: "ollama"  # ollama, llama_cpp
+  preferred_stt_backend: "whisper"  # whisper, vosk
+  preferred_tts_backend: "piper"    # piper, kokoro
+  download_models_on_first_run: true
+  skip_model_download: false
+  model_download_timeout: 300

@@ -1,0 +1,33 @@
+# Core
+pyyaml>=6.0
+
+# Voice Pipeline
+sounddevice>=0.4.6
+numpy>=1.24.0
+faster-whisper>=1.0.0
+edge-tts>=6.1.0
+pvporcupine>=3.0.0
+webrtcvad>=2.0.10
+
+# LLM
+ollama>=0.4.0
+openai>=1.0.0
+
+# Memory
+chromadb>=0.4.0
+sentence-transformers>=2.2.0
+
+# System & Automation
+psutil>=5.9.0
+pyautogui>=0.9.54
+pyperclip>=1.8.2
+plyer>=2.1.0
+
+# Web
+playwright>=1.40.0
+httpx>=0.25.0
+beautifulsoup4>=4.12.0
+
+# CLI / UX
+rich>=13.0.0
+click>=8.1.0
